@@ -18,7 +18,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center">
-      <h1>Welcome!</h1>
+      <h1 className="dark:text-white">Welcome!</h1>
       {!isLoggedIn && 
             <Button
             onClick={() => {
