@@ -3,6 +3,7 @@ import { Input } from "~/components/Input";
 import { FormGroup } from "~/components/FormGroup";
 import Head from "next/head";
 import { useState } from 'react'; 
+import { api } from "~/utils/api";
 
 const GeneratePage: NextPage = () => {
 
@@ -21,9 +22,19 @@ const GeneratePage: NextPage = () => {
         }
     }
 
+
+    const generateCover = api.generate.generateCover.useMutation({
+        onSuccess(data){
+            console.log("mutation finished", data)
+        }
+    });
+
     //Handle form submit 
     function handleFormSubmit(e: React.FormEvent){
         e.preventDefault();
+        generateCover.mutate({
+            prompt: form.prompt
+        });
     }
 
   return (
