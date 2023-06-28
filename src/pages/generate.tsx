@@ -15,6 +15,8 @@ const GeneratePage: NextPage = () => {
         prompt: "",
     }); 
 
+    const [imageUrl, setImageUrl] = useState("");
+
     //Update form function
     function updateForm(key: string) {
         return function(e: React.ChangeEvent<HTMLInputElement>){
@@ -28,7 +30,9 @@ const GeneratePage: NextPage = () => {
 
     const generateCover = api.generate.generateCover.useMutation({
         onSuccess(data){
-            console.log("mutation finished", data)
+            if (data.imageUrl) {
+                setImageUrl(data.imageUrl);
+            }
         }
     });
 
@@ -73,10 +77,13 @@ const GeneratePage: NextPage = () => {
         >
             <FormGroup>
                 <label>Prompt</label>
-                <Input value={form.prompt} onChange={(updateForm("prompt"))}/>
+                <Input value={form.prompt} onChange={updateForm("prompt")}/>
             </FormGroup>
             <Button>Submit</Button>
         </form>
+
+        <img src={imageUrl}/>
+
       </main>
     </>
   );
