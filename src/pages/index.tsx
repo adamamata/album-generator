@@ -15,7 +15,6 @@ const Home: NextPage = () => {
       <Head>
         <title>Home</title>
         <meta name="description" content="AI Album Cover Generator!" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center">
       <h1 className="dark:text-white">Welcome!</h1>

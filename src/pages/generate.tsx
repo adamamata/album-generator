@@ -49,7 +49,6 @@ const GeneratePage: NextPage = () => {
       <Head>
         <title>Generate</title>
         <meta name="description" content="AI Album Cover Generator!" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center">
         {!isLoggedIn && 
