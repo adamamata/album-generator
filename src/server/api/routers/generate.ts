@@ -1,15 +1,37 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import {
   createTRPCRouter,
-  publicProcedure,
+  protectedProcedure,
 } from "~/server/api/trpc";
 
 export const generateRouter = createTRPCRouter({
-    generateCover: publicProcedure.input(z.object({
+    generateCover: protectedProcedure.input(z.object({
         prompt: z.string(),
-    })).mutation(({ctx, input}) => {
-        console.log('we are here', input.prompt)
+    })).mutation(async ({ctx, input}) => {
+
+        const {count} = await ctx.prisma.user.updateMany({
+            where: {
+                id: ctx.session.user.id,
+                credits: {
+                    gte: 1,
+                },
+            },
+            data: {
+                credits: {
+                    decrement: 1
+                }
+            }
+        })
+
+        if (count <= 0) {
+            throw new TRPCError({
+                code: 'BAD_REQUEST',
+                message: 'Not enough credits baby'
+            })
+        }
+
         return {
             message: 'yay it works'
         }
